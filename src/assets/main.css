@@ -1,3 +1,8 @@
+
+@import 'ant-design-vue/dist/antd.css';
+/* This is for dark mode
+@import 'ant-design-vue/dist/antd.dark.css';
+*/
 @import "./base.css";
 
 #app {
@@ -6,5 +11,44 @@
   padding: 2rem;
 
   font-weight: normal;
+}
+.ant-table-thead th.ant-table-column-sort,
+.ant-table-cell,
+.ant-table-thead,
+.ant-table-column-sorters, 
+ .ant-table-thead > tr > th  {
+  background-color: var(--grey-dark);
+}
+.ant-table-column-sorter-up, .ant-table-column-sorter-down {
+  color: var(--black-soft);
+}
+.ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active {
+  color: white;
+}
+
+.ant-table-column-title {
+  color: var(--white-soft);
+  user-select: none;
+}
+.ant-table-column-title:hover {
+  color: var(--white-soft-hover);
+  background-color: var(--grey-dark);
+}
+.ant-table-tbody > tr > td {
+  background-color: var(--white);
+}
+
+.ant-table-tbody > tr.ant-table-row-selected > td {
+  background-color: transparent;
+}
+
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: transparent;
+}
+
+
+.ant-checkbox-checked .ant-checkbox-inner:after {
+  border-color: var(--button-background);
 }
 
