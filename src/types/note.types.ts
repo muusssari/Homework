@@ -10,3 +10,10 @@ export type TableDataType = {
   content: string;
   status: StatusType;
 };
+
+export type NoteType = {
+  id: number,
+  title: string,
+  content: string,
+  status: StatusType,
+}

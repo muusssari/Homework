@@ -9,8 +9,8 @@
                 <a-textarea v-model:value="modelRef.content" />
             </a-form-item>
             <a-form-item>
-                <a-button type="primary" @click.prevent="onSubmit">Save</a-button>
-                <a-button type="text" class="cancel" @click="onCancel">Cancel</a-button>
+                <a-button :loading="store.loadingState" type="primary" @click.prevent="onSubmit">Save</a-button>
+                <a-button :disabled="store.loadingState" type="text" class="cancel" @click="onCancel">Cancel</a-button>
             </a-form-item>
         </a-form>
     </a-modal>
@@ -21,10 +21,12 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue';
 import { Form } from 'ant-design-vue';
+import { useNotesStore } from '@/store/notes.store';
 const useForm = Form.useForm;
 
 export default defineComponent({
   setup() {
+    const store = useNotesStore();
     const visible = ref(false);
     const modelRef = reactive({
       title: '',
@@ -53,8 +55,12 @@ export default defineComponent({
     };
     const onSubmit = () => {
       validate()
-        .then(res => {
+        .then(async (res: {title: string, content: string}) => {
+          console.log("here: ", store.addNewNote)
+          await store.addNewNote(res.title, res.content);
           console.log(res, modelRef);
+        })
+        .then(() => {
           visible.value = false;
         })
         .catch(err => {
@@ -71,7 +77,8 @@ export default defineComponent({
       modelRef,
       onCancel,
       visible,
-      onShow
+      onShow,
+      store
     };
   },
 });

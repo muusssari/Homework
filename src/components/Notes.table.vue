@@ -1,23 +1,24 @@
 <template>
     <a-table
-      :loading="loading"
+      :loading="store.loadingState"
       :columns="columns"
-      :data-source="data"
+      :data-source="computedNotesData"
       :row-selection="rowSelection"
       :pagination="false">
       <template #footer>
-        <DeleteNoteAlert v-if="showAlert" :notesToDelete="selectedKeys"/>
+        <DeleteNoteAlert v-if="showAlert" :notesToDelete="selectedKeys" @buttonAction="buttonAction"/>
         <AddNoteModalVue ref="myChild" />
       </template>
     </a-table>
 </template>
 
 <script lang="ts">
-import { StatusType, type TableDataType } from '@/types/note.types';
 import type { TableColumnType } from 'ant-design-vue';
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, isRef, ref, toRefs } from 'vue';
 import AddNoteModalVue from './modals/addNote.modal.vue';
 import DeleteNoteAlert from './alerts/deleteNote.alert.vue';
+import { useNotesStore } from '@/store/notes.store';
+import type { TableDataType } from '@/types/note.types';
 
 export default defineComponent({
   components: {
@@ -25,7 +26,7 @@ export default defineComponent({
     DeleteNoteAlert
   },
   setup() {
-
+    const store = useNotesStore();
     const columns: TableColumnType<TableDataType>[] = [
       {
           title: 'Id',
@@ -57,52 +58,35 @@ export default defineComponent({
           sortDirections: ['descend', 'ascend'],
       },
     ];
+    const computedNotesData = computed(() => {
+      return store.notes.map(x => {return {...x, key: x.id }})
+    })
 
-  const data: TableDataType[] = [
-    {
-        key: 1,
-        title: 'John Brown',
-        content: 'adsdasadsads',
-        status: StatusType.COMPELETED,
-    },
-    {
-        key: 2,
-        title: 'Jim Green',
-        content: 'adsdsaadsadsa',
-        status: StatusType.NEW,
-    },
-    {
-        key: 3,
-        title: 'Joe Black',
-        content: 'qewqeewasdc',
-        status: StatusType.NEW,
-    },
-    {
-        key: 4,
-        title: 'Jim Red',
-        content: 'dqwedwaszcas',
-        status: StatusType.NOTCOMPLETED,
-    },
-  ];
-  //TODO: change this use pinia
-  let loading = ref<boolean>(false)
-
-  let selectedKeys = ref<number[]>([]);
+  const selectedKeys = ref<number[]>([]);
   const rowSelection = ref({
-  onChange: (selectedRowKeys: number[]) => {
-    //TODO: add this pinia
+    selectedRowKeys: computed(() => selectedKeys.value),
+    onChange: (selectedRowKeys: number[]) => {
     selectedKeys.value = selectedRowKeys;
   }});
+  const buttonAction = (alertAction: boolean) => {
+    if(alertAction) {
+      store.deleteNote(selectedKeys.value.map(e => isRef(e) ? e.value : e) as number[])
+      selectedKeys.value = [];
+    }else {
+      selectedKeys.value = [];
+    }
+  }
   const showAlert = computed(() => {
     return selectedKeys.value.length;
   })
     return {
-      loading,
+      store,
       selectedKeys,
       showAlert,
-      data,
+      computedNotesData,
       columns,
       rowSelection,
+      buttonAction,
     };
   },
 });

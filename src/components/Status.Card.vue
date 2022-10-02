@@ -2,19 +2,19 @@
   <div class="cardContainer">
     <a-row :gutter="[8,8]" :wrap="true">
       <a-col  :xs="16" :sm="8" :md="8" :lg="8" :xl="10">
-        <a-card :bordered="false" class="cardItem" :loading="loading">
+        <a-card :bordered="false" class="cardItem" :loading="store.loadingState">
           <p>Total</p>
-          <p class="number">{{total}}</p>
+          <p class="number">{{totalNotes}}</p>
         </a-card>
       </a-col>
       <a-col  :xs="16" :sm="8" :md="8" :lg="8" :xl="10">
-        <a-card :bordered="false" class="cardItem" :loading="loading">
+        <a-card :bordered="false" class="cardItem" :loading="store.loadingState">
           <p>Completed</p>
           <p class="number">{{completedNotesCount}}</p>
         </a-card>
       </a-col>
       <a-col  :xs="16" :sm="8" :md="8" :lg="8" :xl="10">
-        <a-card :bordered="false" class="cardItem" :loading="loading">
+        <a-card :bordered="false" class="cardItem" :loading="store.loadingState">
             <p>Not completed</p>
             <p class="number">{{notCompletedNotesCount}}</p>
         </a-card>
@@ -24,24 +24,23 @@
 </template>
 
 <script lang="ts">
+import { useNotesStore } from '@/store/notes.store';
+import { StatusType } from '@/types/note.types';
 import { computed } from '@vue/reactivity';
 import { defineComponent, ref } from 'vue';
 
+
 export default defineComponent({
   setup() {
-    //TODO: Change this use pinia
-    const loading = ref<boolean>(false);
-    const completedNotesCount = ref<number>(4);
-    const notCompletedNotesCount = ref<number>(6);
-    const newNotesCount = ref<number>(0);
-    let total = computed(() => {
-      return completedNotesCount.value + notCompletedNotesCount.value + newNotesCount.value;
-    })
+    const store = useNotesStore();
+    const notCompletedNotesCount = computed(() => store.notes.filter(x => x.status === StatusType.NOTCOMPLETED).length)
+    const completedNotesCount = computed(() => store.notes.filter(x => x.status === StatusType.COMPELETED).length)
+    const totalNotes = computed(() => store.notes.length)
     return {
-      loading,
+      store,
       completedNotesCount,
       notCompletedNotesCount,
-      total,
+      totalNotes,
     }
   }
 });

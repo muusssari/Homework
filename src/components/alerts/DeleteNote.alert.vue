@@ -2,8 +2,8 @@
     <div class="warning">
         <warning-filled :style="{fontSize: '22px', color: 'white', margin: 'auto', width:'42px'}"/>
         <p>Do you want to delete these notes?</p>
-        <a-button ghost class="alertButtons">No</a-button>
-        <a-button danger class="alertButtons">Yes</a-button>
+        <a-button ghost class="alertButtons" @click="emitButtonAction(false)">No</a-button>
+        <a-button danger class="alertButtons" @click="emitButtonAction(true)">Yes</a-button>
     </div>
     
 </template>
@@ -16,6 +16,14 @@ export default defineComponent({
   components: {
     WarningFilled
   },
+  setup(props, context) {
+    const emitButtonAction = (buttonActionContinue: boolean) => {
+      context.emit('buttonAction', buttonActionContinue);
+    }
+    return {
+      emitButtonAction,
+    }
+  }
 });
 </script>
 
