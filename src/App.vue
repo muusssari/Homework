@@ -1,16 +1,18 @@
 <template>
-  <h1>ads</h1>
-  <dataGridVue />
+  <h1>Notes</h1>
+  <StatusCard />
+  <NotesTable />
 </template>
 
 <script lang="ts">
-import dataGridVue from './components/dataGrid.vue';
+import NotesTable from "./components/Notes.table.vue";
+import StatusCard from "./components/Status.Card.vue";
 
 export default {
-  name: "App",
   components: {
-    dataGridVue
-  }
+    NotesTable,
+    StatusCard
+},
 }
 </script>
 

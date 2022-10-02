@@ -1,7 +1,7 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --white: #ffffff;
-  --white-soft: #f7f7f7;
+  --white-soft: #e2e0e0;
   --white-soft-hover: hsl(0, 0%, 85%);
 
   --black: #222222;
