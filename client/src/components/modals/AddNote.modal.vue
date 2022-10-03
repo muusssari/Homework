@@ -56,9 +56,7 @@ export default defineComponent({
     const onSubmit = () => {
       validate()
         .then(async (res: {title: string, content: string}) => {
-          console.log("here: ", store.addNewNote)
           await store.addNewNote(res.title, res.content);
-          console.log(res, modelRef);
         })
         .then(() => {
           visible.value = false;

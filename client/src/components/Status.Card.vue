@@ -1,19 +1,19 @@
 <template>
   <div class="cardContainer">
     <a-row :gutter="[8,8]" :wrap="true">
-      <a-col  :xs="16" :sm="8" :md="8" :lg="8" :xl="10">
+      <a-col  :xs="16" :sm="8" :md="8" :lg="8" :xl="8">
         <a-card :bordered="false" class="cardItem" :loading="store.loadingState">
           <p>Total</p>
           <p class="number">{{totalNotes}}</p>
         </a-card>
       </a-col>
-      <a-col  :xs="16" :sm="8" :md="8" :lg="8" :xl="10">
+      <a-col  :xs="16" :sm="8" :md="8" :lg="8" :xl="8">
         <a-card :bordered="false" class="cardItem" :loading="store.loadingState">
           <p>Completed</p>
           <p class="number">{{completedNotesCount}}</p>
         </a-card>
       </a-col>
-      <a-col  :xs="16" :sm="8" :md="8" :lg="8" :xl="10">
+      <a-col  :xs="16" :sm="8" :md="8" :lg="8" :xl="8">
         <a-card :bordered="false" class="cardItem" :loading="store.loadingState">
             <p>Not completed</p>
             <p class="number">{{notCompletedNotesCount}}</p>
