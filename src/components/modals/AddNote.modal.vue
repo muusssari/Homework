@@ -15,7 +15,7 @@
         </a-form>
     </a-modal>
   </Teleport>
-  <a-button type="primary" @click="onShow">Add Note</a-button>
+  <a-button type="primary" @click="onShow" class="footerButton">Add Note</a-button>
 </template>
 
 <script lang="ts">
@@ -88,6 +88,10 @@ export default defineComponent({
 .cancel {
   margin-left: 10px;
   color: var(--button-background);
+}
+.footerButton {
+  display: block;
+  margin-left: auto;
 }
 </style>
   

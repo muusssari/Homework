@@ -6,10 +6,10 @@
       :row-selection="rowSelection"
       :pagination="false">
       <template #footer>
-        <DeleteNoteAlert v-if="showAlert" :notesToDelete="selectedKeys" @buttonAction="buttonAction"/>
-        <AddNoteModalVue ref="myChild" />
+        <AddNoteModalVue ref="myChild"/>
       </template>
     </a-table>
+    <DeleteNoteAlert v-if="showAlert" :notesToDelete="selectedKeys" @buttonAction="buttonAction"/>
 </template>
 
 <script lang="ts">
@@ -91,3 +91,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+  .ant-table-footer {
+    background: transparent !important;
+  }
+  .ant-table {
+    background: transparent !important;
+  }
+</style>
