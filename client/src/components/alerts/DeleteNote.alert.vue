@@ -19,6 +19,7 @@ export default defineComponent({
   components: {
     WarningFilled
   },
+  emits: ["buttonAction"],
   setup(props, context) {
     const emitButtonAction = (buttonActionContinue: boolean) => {
       context.emit('buttonAction', buttonActionContinue);

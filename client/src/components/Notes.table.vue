@@ -9,12 +9,12 @@
         <AddNoteModalVue ref="myChild"/>
       </template>
     </a-table>
-    <DeleteNoteAlert v-if="showAlert" :notesToDelete="selectedKeys" @buttonAction="buttonAction"/>
+    <DeleteNoteAlert v-if="showAlert" @buttonAction="buttonAction"/>
 </template>
 
 <script lang="ts">
 import type { TableColumnType } from 'ant-design-vue';
-import { computed, defineComponent, isRef, ref, toRefs } from 'vue';
+import { computed, defineComponent, isRef, ref } from 'vue';
 import AddNoteModalVue from './modals/addNote.modal.vue';
 import DeleteNoteAlert from './alerts/deleteNote.alert.vue';
 import { useNotesStore } from '@/store/notes.store';
@@ -70,7 +70,7 @@ export default defineComponent({
   }});
   const buttonAction = (alertAction: boolean) => {
     if(alertAction) {
-      store.deleteNote(selectedKeys.value.map(e => isRef(e) ? e.value : e) as number[])
+      store.deleteNotes(selectedKeys.value.map(e => isRef(e) ? e.value : e) as number[])
       selectedKeys.value = [];
     }else {
       selectedKeys.value = [];
@@ -81,7 +81,6 @@ export default defineComponent({
   })
     return {
       store,
-      selectedKeys,
       showAlert,
       computedNotesData,
       columns,

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { StatusType } from 'src/Enums/status.enum';
+import { StatusType } from '../../Enums/status.enum';
 import { CreateNoteDto } from './dto/create-notes.dto';
 import { NoteDto } from './dto/notes.dto';
 
@@ -49,5 +49,12 @@ export class NotesService {
     if(!note) throw new NotFoundException();
     this.notesMockDB = this.notesMockDB.filter(x => x.id !== id);
     return note;
+  }
+
+  deleteNotes(idArray: number[]): NoteDto[] {
+    const notes = this.notesMockDB.filter(x => idArray.includes(x.id));
+    if(notes.length === 0) throw new NotFoundException();
+    this.notesMockDB = this.notesMockDB.filter(x => !notes.map(x => x.id).includes(x.id));
+    return notes;
   }
 }

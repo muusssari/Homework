@@ -1,6 +1,6 @@
 import { IsEnum, IsInt, IsString, Length } from "class-validator";
 import { ApiProperty } from '@nestjs/swagger';
-import { StatusType } from "src/Enums/status.enum";
+import { StatusType } from "../../../Enums/status.enum";
 
 export class NoteDto {
 

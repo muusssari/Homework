@@ -1,4 +1,3 @@
-
 import type { NoteType } from '@/types/note.types';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
@@ -36,6 +35,17 @@ export const useNotesStore = defineStore('counter', () => {
     await loadTestData();
   }
 
+  async function deleteNotes(idArray: number[]) {
+    await fetch('http://localhost:3001/api/notes/', {
+      method: 'DELETE', headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(idArray)
+    })
+    .catch(x => console.log("error: ", x));
+    await loadTestData();
+  }
+
   const addNewNote = async (title: string, content: string) => {
     loadingState.value = true;
     await fetch('http://localhost:3001/api/notes', {
@@ -56,6 +66,7 @@ export const useNotesStore = defineStore('counter', () => {
     loadingState,
     loadTestData,
     addNewNote,
-    deleteNote
+    deleteNote,
+    deleteNotes
   }
 })
